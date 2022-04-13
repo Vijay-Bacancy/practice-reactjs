@@ -1,13 +1,15 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { ItemContext } from '../store/Store';
 import Item from './Item';
 
 function Items(props) {
     // console.log("Items render")
+    const itemCtx = useContext(ItemContext);
     return (
         <div>
             <h3>products</h3>
-            {props.items.map(item => {
-                return <Item item={item} removeItem={props.removeItem} updateItem={props.updateItem}/>
+            {itemCtx.items.map(item => {
+                return <Item item={item}/>
             })}
         </div>
     );
