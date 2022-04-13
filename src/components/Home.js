@@ -26,21 +26,23 @@ function Home(props) {
         }
     ]; 
     const [items, setItems] = useState(MENU_ITEMS)
-    const [name, setName] = useState('')
-    const [price, setPrice] = useState(0)
+    const [item, setItem] = useState({})
 
     const nameChangeHandler = (e) => {
-        setName(e.target.value)
+        setItem(prevItem => {
+            return {name: e.target.value, price: prevItem.price}
+        })
     }
-    const namePriceHandler = (e) => {
-        setPrice(e.target.value)
+    const priceChangeHandler = (e) => {
+        setItem(prevItem => {
+            return {name: prevItem.name, price: e.target.value}
+        })
     }
 
     const addHandler = () => {
-        setItems(prevItems => [...prevItems, {id: Math.random().toString(), name: name, price: price}])
+        setItems(prevItems => [...prevItems, {id: Math.random().toString(), name: item.name, price: item.price}])
         console.log(items)
-        setName('')
-        setPrice(0)
+        setItem({name: '', price: 0})
     }
     const removeHandler = (id) => {
         setItems(items.filter(item => item.id !== id))
@@ -49,17 +51,16 @@ function Home(props) {
     const updateHandler = (id) => {
         const index = items.findIndex(item => item.id === id)
         const oldItem = items[index]
-        const updateItem = {...oldItem, name: name, price: price}
+        const updateItem = {...oldItem, name: item.name, price: item.price}
         items[index] = updateItem
         setItems(items)
-        setName('')
-        setPrice(0)
+        setItem({name: '', price: 0})
         console.log(items)
     }
     return (
         <div>
-            <input type="text" value={name} onChange={nameChangeHandler}/>
-            <input type="number" value={price} onChange={namePriceHandler}/>
+            <input type="text" value={item.name} onChange={nameChangeHandler}/>
+            <input type="number" value={item.price} onChange={priceChangeHandler}/>
             <button onClick={addHandler}>Add</button>
             <Items items={items} removeItem={removeHandler} updateItem={updateHandler}/>
         </div>
