@@ -2,17 +2,45 @@ import React, { useState } from 'react';
 import Items from './Items';
 
 function Home(props) {
-    const [items, setItems] = useState([])
-    const [title, setTitle] = useState('')
+    // console.log("Home render")
+    let MENU_ITEMS = [
+        {
+          id: 'i1',
+          name: 'chinese',
+          price: 200
+        },
+        {
+          id: 'i2',
+          name: 'italian',
+          price: 250
+        },
+        {
+          id: 'i3',
+          name: 'panjabi',
+          price: 150
+        },
+        {
+          id: 'i4',
+          name: 'gujarati',
+          price: 100
+        }
+    ]; 
+    const [items, setItems] = useState(MENU_ITEMS)
+    const [name, setName] = useState('')
+    const [price, setPrice] = useState(0)
 
-    const titleChangeHandler = (e) => {
-        setTitle(e.target.value)
+    const nameChangeHandler = (e) => {
+        setName(e.target.value)
+    }
+    const namePriceHandler = (e) => {
+        setPrice(e.target.value)
     }
 
     const addHandler = () => {
-        setItems(prevItems => [...prevItems, {title: title, id: Math.random().toString()}])
+        setItems(prevItems => [...prevItems, {id: Math.random().toString(), name: name, price: price}])
         console.log(items)
-        setTitle('')
+        setName('')
+        setPrice(0)
     }
     const removeHandler = (id) => {
         setItems(items.filter(item => item.id !== id))
@@ -21,15 +49,17 @@ function Home(props) {
     const updateHandler = (id) => {
         const index = items.findIndex(item => item.id === id)
         const oldItem = items[index]
-        const updateItem = {...oldItem, title: title}
+        const updateItem = {...oldItem, name: name, price: price}
         items[index] = updateItem
         setItems(items)
-        setTitle('')
+        setName('')
+        setPrice(0)
         console.log(items)
     }
     return (
         <div>
-            <input type="text" value={title} onChange={titleChangeHandler}/>
+            <input type="text" value={name} onChange={nameChangeHandler}/>
+            <input type="number" value={price} onChange={namePriceHandler}/>
             <button onClick={addHandler}>Add</button>
             <Items items={items} removeItem={removeHandler} updateItem={updateHandler}/>
         </div>

@@ -2,6 +2,7 @@ import React from 'react';
 import Item from './Item';
 
 function Items(props) {
+    // console.log("Items render")
     return (
         <div>
             <h3>products</h3>
