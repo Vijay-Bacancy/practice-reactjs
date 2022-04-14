@@ -8,7 +8,7 @@ function Item(props) {
         <div>
             <h3>{props.item.name} Rs.{props.item.price}</h3>
             <button onClick={() => itemCtx.removeHandler(props.item.id)}>remove</button>
-            <button onClick={() => itemCtx.updateHandler(props.item.id)}>update</button>
+            <button onClick={() => itemCtx.updateHandler({name: props.enteredItem.name, price:props.enteredItem.price, id: props.item.id})}>update</button>
         </div>
     );
 }
